@@ -12,8 +12,6 @@ exports.collect_partial_Amount =async function(context, event, callback) {
   let Handoff = false;
   
   const Memory = JSON.parse(event.Memory);
-  Remember.task_fail_counter = 0;
-  Remember.repeat = false;
 
   let payment_amount=0.00;
   
@@ -38,7 +36,7 @@ exports.collect_partial_Amount =async function(context, event, callback) {
   }  
   console.log("payment_amount: "+payment_amount);
   console.log("Memory.userTotalBalance: "+Memory.userTotalBalance);
-  if ( payment_amount >= 5 && payment_amount <= Number(Memory.userTotalBalance) ) {
+  if ( payment_amount >= 25 && payment_amount <= Number(Memory.userTotalBalance) ) {
       Say = `Your payment amount is $${payment_amount}. Do you want to change the amount.`;
       
       Remember.payment_amount = payment_amount;
@@ -47,8 +45,8 @@ exports.collect_partial_Amount =async function(context, event, callback) {
       Listen = true;
       Tasks=['yes_no', 'agent_transfer', 'payment_partial'];
   } 
-  else if ( payment_amount < 5 ) {
-      Say = `You entered the payment amount $${payment_amount} is less than $5, we accept only amount $5 or more. `;      
+  else if ( payment_amount < 25 ) {
+      Say = `You entered the payment amount $${payment_amount} is less than $25, we accept only amount $25 or more. `;      
       Listen = false;      
       Redirect="task://payment_partial";
 
@@ -61,7 +59,7 @@ exports.collect_partial_Amount =async function(context, event, callback) {
 
   //End of your code.
   
-  // This callback is what is returned in response to this function being invoked.
+  // This callback is what is returned in response to this function being invoked
 const functions = Runtime.getFunctions();
 let path = functions['responseBuilder'].path;
 let RB = require(path);
